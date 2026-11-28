@@ -2,7 +2,40 @@
 <title>包姐妹 · Bukit Indah 档口 POS</title>
 <style>
 :root{font:17px system-ui;color:#253a30;background:#f5f2e9}body{margin:0}header{background:#193d32;color:white;padding:18px max(18px,4vw);display:flex;flex-wrap:wrap;align-items:center;gap:14px}header strong{font-size:25px;margin-right:auto}main{max-width:1200px;margin:auto;padding:20px}h1{font-size:26px}h2{font-size:20px}button,input,select{font:inherit;padding:11px;border:1px solid #b8c8bc;border-radius:9px;background:white;color:inherit}button{cursor:pointer;margin:3px;min-height:44px}button:hover{background:#e5eee7}button:disabled{opacity:.48;cursor:default}.primary{background:#24634d;color:white}.primary:hover{background:#174d3a}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(145px,1fr));gap:10px}.split{display:grid;grid-template-columns:2fr 1fr;gap:16px}.card{background:white;padding:16px;border-radius:15px;border:1px solid #e1e4db}.slot{text-align:left;min-height:88px}.slot b{font-size:24px;display:block}.active{background:#fff1cf}.paid{background:#e3f1e5}.low{color:#a64c00}.muted{color:#666}.flex{display:flex;flex-wrap:wrap;align-items:center;gap:6px}.line{border-bottom:1px solid #ddd;padding:9px 0}.total{font-size:23px;font-weight:bold}dialog{max-width:min(540px,90vw);border:0;border-radius:15px;box-shadow:0 12px 80px #0005}dialog::backdrop{background:#0006}.keys{display:grid;grid-template-columns:repeat(3,1fr)}table{border-collapse:collapse;width:100%}td,th{text-align:left;padding:9px;border-bottom:1px solid #ddd}.scroll{overflow:auto}#notice{min-height:1.4em;color:#9b430a}@media(max-width:760px){.split{grid-template-columns:1fr}main{padding:12px}}
-header button{color:#193d32;background:#fff;font-weight:700}header button:hover{color:#193d32;background:#e5eee7}
+.pos-header{--nav-accent:#e2f2e8;gap:8px 18px;padding:9px max(12px,3vw);align-items:center}
+.pos-header .pos-title{margin:0;font-size:clamp(1rem,1.7vw,1.25rem)}
+.pos-nav,.pos-account{display:flex;align-items:center;gap:3px}
+.pos-nav{flex-wrap:wrap;margin-inline-start:auto}
+.pos-account{gap:6px;font-size:.83rem}
+.pos-account-name{padding:5px 9px;border-radius:6px;background:#dceee4;color:#18392e;font-weight:700;overflow-wrap:anywhere}
+.pos-account-name[data-role="owner"]{background:#f4e4b5;color:#493719}
+.pos-account-name[data-role="manager"]{background:#deedf7;color:#173a53}
+.pos-header button,.pos-nav summary{
+ margin:0;padding:6px 9px;min-height:44px;border:0;border-radius:7px;background:transparent;
+ color:#fff;font-size:.88rem;font-weight:600;white-space:nowrap
+}
+.pos-header button:hover,.pos-nav summary:hover,.pos-nav details[open]>summary,.pos-nav summary[data-current]{
+ background:#ffffff20;color:white
+}
+.pos-nav button[aria-current="page"]{background:var(--nav-accent);color:#193d32}
+.pos-nav details{position:relative}
+.pos-nav summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:5px;box-sizing:border-box}
+.pos-nav summary::-webkit-details-marker{display:none}
+.pos-nav summary::after{content:"▾";font-size:.75em}
+.pos-nav-menu{
+ position:absolute;z-index:5;inset-inline-end:0;top:calc(100% + 5px);min-width:144px;padding:5px;
+ border:1px solid #d6e0d7;border-radius:9px;background:#fff;box-shadow:0 8px 18px #142e2640
+}
+.pos-nav-menu button{width:100%;text-align:start;color:#193d32}
+.pos-nav-menu button:hover{background:#e8f1e9;color:#193d32}
+.pos-header [hidden]{display:none!important}
+@media(max-width:930px){
+ .pos-account{margin-inline-start:auto}
+ .pos-header .pos-nav{order:2;flex:1 0 100%;position:relative;justify-content:flex-end}
+ .pos-nav details{position:static}
+ .pos-nav-menu{top:calc(100% + 5px);inset-inline-end:0}
+}
+@media(max-width:400px){.pos-header button,.pos-nav summary{padding-inline:6px;font-size:.82rem}}
 .photo-frame{display:grid;place-items:center;aspect-ratio:4/3;width:100%;margin:0 0 8px;overflow:hidden;border:1px dashed #aebcb1;border-radius:8px;background:#eef2ec;color:#4f6559;font-size:.85rem}.photo-frame img{width:100%;height:100%;min-height:0;object-fit:cover}
 #change{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:6px;margin:12px 0;padding:10px 14px;border-radius:10px;background:#e3f1e5;color:#193d32;font-weight:700}#change strong{font-size:clamp(1.75rem,5vw,2.5rem);font-variant-numeric:tabular-nums}#change:empty{display:none}
 dialog{box-sizing:border-box;max-height:calc(100dvh - 24px);overflow:auto}
@@ -18,11 +51,15 @@ body.foc-mode{min-height:100vh;background:#f2e9ff;color:#3f235a}body.foc-mode he
 #stock-entry,#order-qty{box-sizing:border-box;width:100%;max-width:100%}
 .discount-preview{margin:12px 0;padding:10px 12px;border-radius:8px;background:#eef4ee}
 .discount-preview div{display:flex;justify-content:space-between;gap:12px}
+.discount-preview div[hidden]{display:none}
+.discount-keypad{margin:0 0 10px}
+.discount-keypad button{margin:2px}
 .discount-preview dd{margin:0;white-space:nowrap;font-variant-numeric:tabular-nums}
 .discount-preview div:last-child{margin-top:4px;font-weight:700;color:#193d32}
 #discount-error:empty{display:none}
-.discount-actions{display:flex;align-items:center;gap:6px}
-.discount-actions button{margin:0}
+.discount-actions,.checkout-actions{display:flex;align-items:center;gap:5px}
+.discount-actions button,.checkout-actions button{margin:0;min-height:44px;padding:7px 9px;font-size:.86rem;white-space:nowrap}
+.checkout-actions{margin-top:6px}
 .customer-receipt{box-sizing:border-box;width:320px;max-width:100%;padding:12px;background:white;color:#111;font-size:14px;line-height:1.4;font-variant-numeric:tabular-nums}
 .receipt-heading{text-align:center;margin-bottom:10px}
 .receipt-heading h2,.receipt-heading p,.receipt-footer p{margin:0}
@@ -49,6 +86,21 @@ body.foc-mode{min-height:100vh;background:#f2e9ff;color:#3f235a}body.foc-mode he
  .customer-receipt{width:100%;max-width:72mm;padding:2mm;font-size:10pt}
 }
 #change strong{color:#a64c00}
+.accounting-tabs{display:flex;gap:6px;margin-bottom:14px}
+.accounting-tabs button{margin:0;min-height:44px}
+.report-filters,.report-export{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin:8px 0 14px}
+.service-counts{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px}
+.service-counts button{margin:0;padding:7px 11px;background:#eef4ee}
+.sales-report-print{max-width:900px;padding:10px;color:#111;background:white}
+.sales-report-print table{font-size:.85rem}
+.sales-report-print th,.sales-report-print td{overflow-wrap:anywhere;padding:5px}
+@media print{
+ body:has(#modal[open] .sales-report-print)>:not(#modal),#modal[open]:has(.sales-report-print)>button{display:none!important}
+ #modal[open]:has(.sales-report-print){position:static;inset:auto;margin:0;padding:0;border:0;box-shadow:none;max-height:none;max-width:none;width:auto;overflow:visible}
+ #modal[open]:has(.sales-report-print)::backdrop{display:none}
+ .sales-report-print thead{display:table-header-group}
+ .sales-report-print tr{break-inside:avoid}
+}
 .order-layout{grid-template-columns:minmax(0,1.7fr) minmax(340px,1fr);align-items:start}
 .order-panel{min-width:0;position:sticky;top:12px}
 .order-panel h2{margin:0 0 12px}
@@ -76,7 +128,23 @@ body.foc-mode{min-height:100vh;background:#f2e9ff;color:#3f235a}body.foc-mode he
 @media(max-width:760px){.order-layout{grid-template-columns:1fr}.order-panel{position:static}}
 @media(max-width:370px){.order-list th,.order-list td{padding-left:2px;padding-right:2px}.order-qty-controls{gap:2px}}
 </style>
-<header><strong>包姐妹 · Bukit Indah 档口 POS</strong><button onclick="show('home')">点单</button><button onclick="show('sales')">销售记录</button><button onclick="show('stock')">库存管理</button><button onclick="show('shift')">现金交班</button><button onclick="show('close')">结帐</button><button onclick="show('attendance')">打卡</button><button onclick="show('staff-admin')">员工管理</button><button onclick="show('month')">月结</button></header>
+<header class="pos-header">
+ <strong class="pos-title">包姐妹 · Bukit Indah 档口 POS</strong>
+ <nav class="pos-nav" aria-label="档口导航" hidden>
+  <button type="button" data-page="home" onclick="show('home')">点单</button>
+  <button type="button" data-page="stock" onclick="show('stock')">库存管理</button>
+  <button type="button" data-page="shift" onclick="show('shift')">现金交班</button>
+  <button type="button" data-page="attendance" onclick="show('attendance')">打卡</button>
+  <button type="button" data-page="accounting" onclick="show('accounting')">账务</button>
+  <details>
+   <summary>更多</summary>
+   <div class="pos-nav-menu">
+    <button type="button" data-page="sales" onclick="show('sales')">销售记录</button>
+    <button type="button" data-page="staff-admin" onclick="show('staff-admin')">员工管理</button>
+   </div>
+  </details>
+ </nav>
+</header>
 <main><div id="notice" role="status"></div><div id="view"></div></main><dialog id="modal"></dialog>
 <script>
 const catalog=[
@@ -107,13 +175,17 @@ const discountAmount=(o,subtotal=orderSubtotal(o))=>o.discountRate===undefined
  ?Math.min(o.discount??0,subtotal)
  :Math.round(subtotal*o.discountRate/10000);
 const discountLabel=o=>o.discountRate?'折扣 '+(o.discountRate/100)+'%':'折扣';
-const total=o=>orderSubtotal(o)-discountAmount(o);
+const discountedTotal=(o,subtotal=orderSubtotal(o))=>subtotal-discountAmount(o,subtotal);
+const roundBill=cents=>Math.round(cents/5)*5;
+const total=o=>roundBill(discountedTotal(o));
 function orderTotals(o){
- const subtotal=orderSubtotal(o),discount=discountAmount(o);
+ const subtotal=orderSubtotal(o),discount=discountAmount(o),beforeRounding=subtotal-discount;
+ const due=roundBill(beforeRounding),rounding=due-beforeRounding;
  return `<dl class="order-summary">
   <div><dt>商品小计</dt><dd>${money(subtotal)}</dd></div>
   ${discount||o.discountRate?`<div><dt>${discountLabel(o)}</dt><dd>−${money(discount)}</dd></div>`:''}
-  <div class="order-due"><dt>应收金额</dt><dd>${money(subtotal-discount)}</dd></div>
+  ${rounding?`<div><dt>Rounding</dt><dd>${signedMoney(rounding)}</dd></div>`:''}
+  <div class="order-due"><dt>应收金额</dt><dd>${money(due)}</dd></div>
  </dl>`;
 }
 const order=()=>db.orders.find(o=>o.id===current);
@@ -152,7 +224,12 @@ function renderServiceSlots(){
   const n=i+1,o=db.orders.find(x=>x.slot===n&&occupied(x));
   return '<button class="slot '+(o?(o.method?'paid':'active'):'')+'" onclick="openSlot('+n+')"><b>'+slotLabel(n)+'</b>'+(o?state(o)+timing(o):'可开单')+'</button>';
  });
- view.innerHTML='<h1>点单</h1><div class="service-layout"><section class="card"><h2>桌位号</h2><div class="service-grid">'+slots.slice(0,40).join('')+'</div></section><section class="card"><h2>打包号码</h2><div class="service-grid takeaway-grid">'+slots.slice(40).join('')+'</div></section></div>';
+ const counts=canPreviewVisit('sales')?salesTotals(paidOrders(today())):null;
+ const serviceCounts=counts?`<div class="service-counts" aria-label="今日已付款订单">
+  <button onclick="showTodaySales()"><span aria-hidden="true">🍽️</span> 今日堂食 ${counts.dineIn} 单</button>
+  <button onclick="showTodaySales()"><span aria-hidden="true">🛍️</span> 今日打包 ${counts.takeaway} 单</button>
+ </div>`:'';
+ view.innerHTML='<h1>点单</h1>'+serviceCounts+'<div class="service-layout"><section class="card"><h2>桌位号</h2><div class="service-grid">'+slots.slice(0,40).join('')+'</div></section><section class="card"><h2>打包号码</h2><div class="service-grid takeaway-grid">'+slots.slice(40).join('')+'</div></section></div>';
 }
 function render(){
  if(page==='month'){renderMonth();return}
@@ -289,21 +366,28 @@ function openDiscount(){
  dialog(`<form id="order-discount">
   <h2>整单折扣</h2>
   <p>商品小计 ${money(subtotal)}</p>
-  <label>折扣比例（%）<br><input name="discount" inputmode="decimal" placeholder="例如 10" value="${saved?saved/100:''}"></label>
+  <label>折扣比例（%）<br><input name="discount" inputmode="none" placeholder="例如 10" value="${saved?saved/100:''}"></label>
   ${legacyDiscount?'<p>目前折扣 '+money(legacyDiscount)+'。输入百分比后会取代原折扣。</p>':''}
   <dl class="discount-preview" aria-live="polite" aria-atomic="true">
    <div><dt>折扣金额</dt><dd id="discount-deduction"></dd></div>
-   <div><dt>折后应收</dt><dd id="discount-due"></dd></div>
+   <div><dt>折后金额</dt><dd id="discount-net"></dd></div>
+   <div id="discount-rounding-row" hidden><dt>Rounding</dt><dd id="discount-rounding"></dd></div>
+   <div><dt>应收金额</dt><dd id="discount-due"></dd></div>
   </dl>
+  <div class="keys stock-keypad discount-keypad" role="group" aria-label="折扣数字键盘">
+   ${['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(key=>`<button type="button" data-key="${key}"${key==='⌫'?' aria-label="退格"':''}>${key}</button>`).join('')}
+  </div>
   <p id="discount-error" role="alert"></p>
   <div class="discount-actions">
    <button type="submit" class="primary">应用折扣</button>
    <button type="button" onclick="modal.close()">关闭</button>
+   ${(saved||legacyDiscount)?'<button type="button" id="remove-discount">移除折扣</button>':''}
   </div>
-  ${(saved||legacyDiscount)?'<button type="button" id="remove-discount">移除折扣</button>':''}
  </form>`,false);
  const form=document.querySelector('#order-discount'),input=form.elements.discount;
  const deduction=document.querySelector('#discount-deduction'),due=document.querySelector('#discount-due');
+ const net=document.querySelector('#discount-net'),rounding=document.querySelector('#discount-rounding');
+ const roundingRow=document.querySelector('#discount-rounding-row');
  const error=document.querySelector('#discount-error');
  const readRate=()=>{
   const rate=parseDecimalHundredths(input.value.trim());
@@ -312,10 +396,30 @@ function openDiscount(){
  const updatePreview=()=>{
   const rate=readRate();
   const amount=input.value.trim()===''?legacyDiscount:rate===null?null:discountAmount({discountRate:rate},subtotal);
+  const beforeRounding=amount===null?null:subtotal-amount;
+  const payable=beforeRounding===null?null:roundBill(beforeRounding);
+  const adjustment=payable===null?0:payable-beforeRounding;
   deduction.textContent=amount===null?'—':'−'+money(amount);
-  due.textContent=amount===null?'—':money(subtotal-amount);
+  net.textContent=beforeRounding===null?'—':money(beforeRounding);
+  roundingRow.hidden=adjustment===0;
+  rounding.textContent=signedMoney(adjustment);
+  due.textContent=payable===null?'—':money(payable);
  };
- input.addEventListener('input',()=>{error.textContent='';updatePreview()});
+ const refreshInput=()=>{error.textContent='';updatePreview()};
+ input.addEventListener('input',refreshInput);
+ const keypad=form.querySelector('.discount-keypad');
+ keypad.addEventListener('pointerdown',event=>{if(event.target.closest('button'))event.preventDefault()});
+ keypad.addEventListener('click',event=>{
+  const key=event.target.closest('button')?.dataset.key;
+  if(!key)return;
+  const start=input.selectionStart,end=input.selectionEnd;
+  if(key==='⌫'){
+   input.setRangeText('',start===end?Math.max(0,start-1):start,end,'end');
+  }else{
+   input.setRangeText(key==='.'&&start===0?'0.':key,start,end,'end');
+  }
+  refreshInput();
+ });
  updatePreview();
  form.onsubmit=event=>{
   event.preventDefault();
@@ -335,8 +439,8 @@ function openDiscount(){
  input.focus();
  input.select();
 }
-function checkout(){const o=order(),due=total(o);
- dialog('<h2>应收 '+money(due)+'</h2>'+((discountAmount(o)||o.discountRate)?'<p>'+discountLabel(o)+' −'+money(discountAmount(o))+'</p>':'')+'<label>实收金额 <input id="cash" inputmode="decimal" size="8"></label><p id="change" role="status"></p><div class="flex"><button onclick="preset('+due+')">刚好</button>'+[10,20,50].map(n=>'<button onclick="preset('+n*100+')">RM'+n+'</button>').join('')+'</div><div class="keys">'+['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(k=>'<button onclick="digit(\''+k+'\')">'+k+'</button>').join('')+'</div><label><input id="handoff" type="checkbox"> 同时标为已取餐</label><div class="flex"><button class="primary" onclick="pay(\'现金\')">确认现金</button><button class="primary" onclick="pay(\'TNG\')">确认 TNG 到账</button></div>');cash.oninput=changeDisplay
+function checkout(){const due=total(order());
+ dialog('<h2>应收 '+money(due)+'</h2><label>实收金额 <input id="cash" inputmode="decimal" size="8"></label><p id="change" role="status"></p><div class="flex"><button onclick="preset('+due+')">刚好</button>'+[10,20,50].map(n=>'<button onclick="preset('+n*100+')">RM'+n+'</button>').join('')+'</div><div class="keys">'+['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(k=>'<button onclick="digit(\''+k+'\')">'+k+'</button>').join('')+'</div><label><input id="handoff" type="checkbox"> 同时标为已取餐</label><div class="checkout-actions"><button class="primary" onclick="pay(\'现金\')">确认现金</button><button class="primary" onclick="pay(\'TNG\')">确认 TNG 到账</button><button type="button" onclick="modal.close()">关闭</button></div>',false);cash.oninput=changeDisplay
 }
 function preset(c){cash.value=(c/100).toFixed(2);changeDisplay()}
 function digit(k){cash.value=k==='⌫'?cash.value.slice(0,-1):cash.value+k;changeDisplay()}
@@ -413,13 +517,65 @@ function commitStock(){
 }
 function choosePhoto(p){dialog('<h2>'+esc(catalog[p][0])+' · 产品照片</h2><input type="file" accept="image/*" onchange="photoFile('+p+',this.files[0])"><button onclick="delete db.photos['+p+'];modal.close();save()">移除照片</button>')}
 async function photoFile(p,file){if(!file)return;try{const img=await createImageBitmap(file),canvas=document.createElement('canvas'),scale=Math.min(1,420/Math.max(img.width,img.height));canvas.width=img.width*scale;canvas.height=img.height*scale;canvas.getContext('2d').drawImage(img,0,0,canvas.width,canvas.height);db.photos[p]=canvas.toDataURL('image/jpeg',.77);img.close();modal.close();save()}catch{modal.close();tell('无法保存照片，请试试 JPG 或 PNG')}}
-function renderSales(){const orders=db.orders.filter(o=>o.method&&o.day===day),sum=method=>orders.filter(o=>!method||o.method===method).reduce((s,o)=>s+o.received,0),stats={};
- for(const o of orders)for(const l of o.lines){const k=l.p+'-'+l.frozen;const a=stats[k]||={label:label(l),unit:l.frozen?'包':catalog[l.p][2],sold:0,free:0};a[l.free?'free':'sold']+=l.q}
- view.innerHTML='<h1>销售记录</h1><div class="flex"><input aria-label="销售日期" type="date" value="'+esc(day)+'" onchange="day=this.value;render()"><input aria-label="查单" placeholder="销售单号或商品名" value="'+esc(search)+'" oninput="search=this.value;listOrders()"></div><div class="grid">'+[['实收',money(sum())],['销售单数',orders.length+' 单'],['现金',money(sum('现金'))],['TNG',money(sum('TNG'))]].map(([k,v])=>'<div class="card">'+k+'<div class="total">'+v+'</div></div>').join('')+'</div><h2>商品销量</h2><div class="scroll"><table><tr><th>商品</th><th>售出</th><th>FOC</th></tr>'+Object.values(stats).sort((a,b)=>b.sold-a.sold).map(a=>'<tr><td>'+esc(a.label)+'</td><td>'+a.sold+' '+a.unit+'</td><td>'+a.free+' '+a.unit+'</td></tr>').join('')+'</table></div><h2>订单明细</h2><div id="salesList"></div>';listOrders()
+function paidOrders(start,end=start){
+ return db.orders.filter(o=>o.method&&!o.cancelled&&o.day>=start&&o.day<=end);
 }
-function listOrders(){document.querySelector('#salesList').innerHTML=db.orders.filter(o=>o.method&&o.day===day&&[o.number,...o.lines.map(label)].some(s=>s.includes(search.trim()))).reverse().map(o=>'<div class="line"><strong>'+o.number+'</strong> · '+new Date(o.time).toLocaleTimeString('en-MY',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit'})+' · '+o.method+' · '+money(o.received)+' · '+esc(o.lines.map(l=>label(l)+' × '+l.q).join('、'))+' <button onclick="details(\''+o.id+'\')">查看／更正</button></div>').join('')||'没有符合条件的订单'}
+function serviceType(o){
+ return o.slot>=1&&o.slot<=40?'堂食':o.slot>40?'打包':'未分类';
+}
+function salesTotals(orders){
+ const totals={cash:0,tng:0,dineIn:0,takeaway:0,foc:0,count:orders.length};
+ for(const o of orders){
+  if(o.method==='现金')totals.cash+=o.received;
+  if(o.method==='TNG')totals.tng+=o.received;
+  const service=serviceType(o);
+  if(service==='堂食')totals.dineIn++;
+  if(service==='打包')totals.takeaway++;
+  totals.foc+=o.lines.reduce((sum,line)=>sum+(line.free?line.q:0),0);
+ }
+ return totals;
+}
+function productSales(orders){
+ const items=new Map();
+ for(const o of orders)for(const line of o.lines){
+  const key=line.p+'-'+line.frozen;
+  if(!items.has(key))items.set(key,{label:label(line),unit:sellUnit(line),sold:0,free:0});
+  items.get(key)[line.free?'free':'sold']+=line.q;
+ }
+ return [...items.values()].sort((a,b)=>b.sold-a.sold);
+}
+function salesCards(totals){
+ return '<div class="grid">'+[
+  ['实收总额',money(totals.cash+totals.tng)],['现金',money(totals.cash)],['TNG',money(totals.tng)],
+  ['成交单数',totals.count+' 单'],['堂食',totals.dineIn+' 单'],['打包',totals.takeaway+' 单']
+ ].map(([name,value])=>'<div class="card">'+name+'<div class="total">'+value+'</div></div>').join('')+'</div>';
+}
+function reportTable(headers,rows){
+ return '<table><thead><tr>'+headers.map(cell=>'<th scope="col">'+esc(cell)+'</th>').join('')+'</tr></thead><tbody>'+rows.map(row=>'<tr>'+row.map(cell=>'<td>'+esc(cell)+'</td>').join('')+'</tr>').join('')+'</tbody></table>';
+}
+function exportButtons(report){
+ return `<div class="report-export">
+  <button onclick="exportSalesReport('${report}','csv')">导出 CSV</button>
+  <button onclick="exportSalesReport('${report}','pdf')">打印／存 PDF</button>
+ </div>`;
+}
+function renderSales(){
+ const orders=paidOrders(day),items=productSales(orders);
+ view.innerHTML='<h1>销售记录</h1><div class="report-filters"><label>营业日期 <input type="date" value="'+esc(day)+'" onchange="if(this.value){day=this.value;render()}"></label><input aria-label="查单" placeholder="销售单号或商品名" value="'+esc(search)+'" oninput="search=this.value;listOrders()"></div>'+
+  salesCards(salesTotals(orders))+exportButtons('sales')+
+  '<h2>商品销量</h2><div class="scroll">'+reportTable(['商品','售出','FOC'],items.map(item=>[item.label,item.sold+' '+item.unit,item.free+' '+item.unit]))+'</div><h2>订单明细</h2><div id="salesList"></div>';
+ listOrders();
+}
+function listOrders(){
+ const matching=paidOrders(day).filter(o=>[o.number,...o.lines.map(label)].some(s=>s.includes(search.trim())));
+ document.querySelector('#salesList').innerHTML=matching.reverse().map(o=>`<div class="line">
+  <strong>${esc(o.number)}</strong> · ${esc(attendanceTime(o.time))} · ${serviceType(o)} · ${esc(o.method)} · ${money(o.received)} · ${esc(o.lines.map(l=>label(l)+' × '+l.q).join('、'))}
+  <button onclick="details('${esc(o.id)}')">查看／更正</button>
+ </div>`).join('')||'没有符合条件的订单';
+}
+function showTodaySales(){day=today();search='';show('sales')}
 function makeReceipt(o,tendered){
- return {number:o.number,time:o.time,slot:o.slot,cashier:cashierLabel(o.cashier),method:o.method,subtotal:orderSubtotal(o),discount:discountAmount(o),discountRate:o.discountRate,total:o.received,tendered,lines:o.lines.map(l=>({
+ return {number:o.number,time:o.time,slot:o.slot,cashier:cashierLabel(o.cashier),method:o.method,subtotal:orderSubtotal(o),discount:discountAmount(o),discountRate:o.discountRate,beforeRounding:discountedTotal(o),rounding:o.received-discountedTotal(o),total:o.received,tendered,lines:o.lines.map(l=>({
   name:catalog[l.p][0],unit:sellUnit(l),frozen:l.frozen,free:l.free,quantity:l.q,price:l.free?0:catalog[l.p][1]*factor(l)
  }))};
 }
@@ -449,6 +605,7 @@ function receiptMarkup(receipt){
   </table>
   <dl class="receipt-payment">
    ${receipt.discount||receipt.discountRate?row('商品小计',money(receipt.subtotal))+row(discountLabel(receipt),'−'+money(receipt.discount)):''}
+   ${receipt.rounding!==undefined?row('取整前金额',money(receipt.beforeRounding))+row('Rounding',signedMoney(receipt.rounding)):''}
    ${row('合计',money(receipt.total),'receipt-total')}
    ${row('付款方式',receipt.method)}
    ${Number.isFinite(receipt.tendered)
@@ -470,16 +627,45 @@ function correct(i){const l=order().lines[i];dialog('<h2>更正 '+esc(label(l))+
 function replacementLine(l){const [p,f]=replacement.value.split(',').map(Number);return {...l,p,frozen:!!f}}
 function priceDiff(o,l,n){
  const before=orderSubtotal(o),after=before+(l.free?0:(catalog[n.p][1]*factor(n)-catalog[l.p][1]*factor(l))*l.q);
- return (after-discountAmount(o,after))-(before-discountAmount(o,before));
+ const beforeDiscounted=discountedTotal(o,before),afterDiscounted=discountedTotal(o,after);
+ return o.receipt?.rounding===undefined
+  ?afterDiscounted-beforeDiscounted
+  :roundBill(afterDiscounted)-roundBill(beforeDiscounted);
 }
 function diff(i){const l=order().lines[i];difference.textContent='价差 '+money(priceDiff(order(),l,replacementLine(l)))}
 function applyCorrection(i){const o=order(),l=o.lines[i],n=replacementLine(l),delta=priceDiff(o,l,n);if(!reason.value.trim()){difference.textContent='请填写更正原因';return}if(l.p===n.p&&l.frozen===n.frozen)return;if(remaining(n.p)+(n.p===l.p?l.q*factor(l):0)<n.q*factor(n)){difference.textContent='更正后的商品库存不足';return}if(settled.value==='1'&&o.received+delta<0){difference.textContent='退款金额超过实收';return}db.stock[l.p]+=l.q*factor(l);db.stock[n.p]-=n.q*factor(n);o.lines[i]=n;if(settled.value==='1')o.received+=delta;o.history.push(today()+' '+new Date().toLocaleTimeString('en-MY',{timeZone:'Asia/Kuala_Lumpur'})+' · '+label(l)+' → '+label(n)+' × '+l.q+' · '+reason.value.trim()+' · 价差 '+money(delta)+' · '+(settled.value==='1'?'已结算':'保留实收'));modal.close();save();details(o.id)}
 function backup(){const url=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download='BaoSisters-Bukit-Indah-'+today()+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
-render();
 setInterval(refreshWait,1000);
 
 const previewHeader=document.querySelector('header');
-const previewNav=[...previewHeader.querySelectorAll('button')];
+const previewNavigation=previewHeader.querySelector('nav');
+const previewNav=[...previewNavigation.querySelectorAll('[data-page]')];
+const previewMenus=[...previewNavigation.querySelectorAll('details')];
+document.addEventListener('click',event=>{
+ for(const menu of previewMenus)if(menu.open&&!menu.contains(event.target))menu.open=false;
+});
+for(const menu of previewMenus){
+ menu.addEventListener('toggle',()=>{
+  if(menu.open)for(const other of previewMenus)if(other!==menu)other.open=false;
+ });
+ menu.addEventListener('keydown',event=>{
+  if(event.key==='Escape'&&menu.open){menu.open=false;menu.querySelector('summary').focus()}
+ });
+}
+function updatePreviewNavigation(){
+ const activePage=page==='order'?'home':['close','month'].includes(page)?'accounting':page;
+ for(const button of previewNav){
+  button.hidden=!canPreviewVisit(button.dataset.page);
+  if(!button.hidden&&button.dataset.page===activePage)button.setAttribute('aria-current','page');
+  else button.removeAttribute('aria-current');
+ }
+ previewNavigation.hidden=!previewNav.some(button=>!button.hidden);
+ for(const menu of previewMenus){
+  const menuButtons=previewNav.filter(button=>menu.contains(button)&&!button.hidden);
+  menu.hidden=!menuButtons.length;
+  menu.querySelector('summary').toggleAttribute('data-current',menuButtons.some(button=>button.dataset.page===activePage));
+ }
+}
 const previewShow=show;
 let previewRole=null,previewUser=null;
 const ownerSessionKey='bao-sisters-bukit-indah-preview-owner';
@@ -495,7 +681,8 @@ function hasPreviewOwnerSession(){
 function previewLogin(){
  rememberPreviewOwner(false);
  previewRole=null;previewUser=null;foc=false;document.body.classList.remove('foc-mode');
- previewNav.forEach(b=>b.hidden=true);
+ previewNavigation.hidden=true;
+ for(const menu of previewMenus)menu.open=false;
  document.querySelector('#preview-account')?.remove();
  tell('');
  view.innerHTML='<form id="preview-form" class="card" style="max-width:420px;margin:30px auto"><h1>登录</h1><p>操作演示 · 请用测试账号</p><p><label>账号<br><input name="account" autocomplete="off" required></label></p><p><label>密码<br><input type="password" name="password" autocomplete="current-password" required></label></p><p><label><input type="checkbox" id="preview-show-password"> 显示密码</label></p><button class="primary" type="submit">登录</button><p id="preview-error" role="alert"></p></form>';
@@ -517,22 +704,28 @@ function previewLogin(){
 function showPreviewAccount(account,role){
  previewRole=role;
  previewUser=account;
- previewNav.forEach((b,i)=>b.hidden=!canPreviewVisit(['home','sales','stock','shift','close','attendance','staff-admin','month'][i]));
- const session=document.createElement('span'),button=document.createElement('button');
- session.id='preview-account';
- session.textContent=account==='owner'?'老板演示':previewRole==='manager'?'店长演示':cashierLabel(account);
+
+ const session=document.createElement('span'),name=document.createElement('span'),button=document.createElement('button');
+ session.id='preview-account';session.className='pos-account';
+ name.className='pos-account-name';
+ name.dataset.role=account==='owner'?'owner':role;
+ name.textContent=cashierLabel(account);
  button.textContent='退出';button.onclick=previewLogin;
- session.append(' ',button);previewHeader.append(session);
+ session.append(name,button);previewHeader.append(session);
  const landing=['home','attendance','stock','shift','close','sales','staff-admin','month'].find(canPreviewVisit);
- if(landing)previewShow(landing);else view.innerHTML='<h1>当前账号暂无可用权限</h1>';
+ if(landing)show(landing);else view.innerHTML='<h1>当前账号暂无可用权限</h1>';
 }
 show=p=>{
+ if(p==='accounting')p=canPreviewVisit('close')?'close':'month';
  if(!canPreviewVisit(p))return;
  previewShow(p);
+ updatePreviewNavigation();
+ for(const menu of previewMenus)menu.open=false;
 };
 
 function canPreviewVisit(p){
  if(!previewRole)return false;
+ if(p==='accounting')return canPreviewVisit('close')||canPreviewVisit('month');
  if(p==='month')return previewUser==='owner'||(previewUser==='manager'&&db.managerMonth.view);
  if(previewUser==='owner')return true;
  if(previewUser==='manager'){
@@ -709,14 +902,15 @@ function shiftCorrectionCell(s){
  return (previewUser==='owner'&&s.count!==undefined?'<button onclick="correctShiftCash('+db.shifts.indexOf(s)+')">更正金额</button>':'')+(edits?'<details><summary>修改记录</summary>'+edits+'</details>':'');
 }
 function renderDayClose(){
- if(previewRole!=='manager')return;
- const shifts=db.shifts.filter(s=>s.day===closeDay),orders=db.orders.filter(o=>o.day===closeDay&&o.method);
+ if(!canPreviewVisit('close'))return;
+ const shifts=db.shifts.filter(s=>s.day===closeDay),orders=paidOrders(closeDay);
+ const {dineIn,takeaway}=salesTotals(orders);
  const cash=orders.filter(o=>o.method==='现金').reduce((sum,o)=>sum+o.received,0);
  const tng=orders.filter(o=>o.method==='TNG').reduce((sum,o)=>sum+o.received,0);
  const foc=orders.flatMap(o=>o.lines).filter(l=>l.free).reduce((sum,l)=>sum+l.q,0);
  const closed=db.dayCloses[closeDay];
  const unassignedCash=orders.filter(o=>o.method==='现金'&&o.cashier==='owner'&&!o.shiftId).reduce((sum,o)=>sum+o.received,0);
- view.innerHTML='<h1>结帐</h1><p><label>营业日期 <input type="date" value="'+esc(closeDay)+'" onchange="closeDay=this.value;render()"></label></p><div class="grid">'+[['实收总额',money(cash+tng)],['现金销售',money(cash)],['TNG 实收',money(tng)],['成交单数',orders.length+' 单'],['FOC',foc+' 个销售单位']].map(([name,value])=>'<div class="card">'+name+'<div class="total">'+value+'</div></div>').join('')+'</div><h2>班次和现金盘点</h2>'+(unassignedCash?'<p>老板直接收款（未归入钱箱班次）：'+money(unassignedCash)+'</p>':'')+'<div class="scroll"><table><thead><tr><th>值班人</th><th>备用金</th><th>应有现金</th><th>实点现金</th><th>实点差额</th><th>接班人实收</th><th>更正记录</th></tr></thead><tbody>'+shifts.map(s=>'<tr><td>'+cashierLabel(s.actor)+'</td><td>'+money(s.float)+'</td><td>'+money(s.expected??shiftExpected(s))+'</td><td>'+(s.count===undefined?'—':money(s.count))+'</td><td>'+(s.count===undefined?'—':signedMoney(s.count-s.expected))+'</td><td>'+(s.receivedCount===undefined?'—':cashierLabel(s.receivedBy)+' '+money(s.receivedCount)+(s.receivedCount===s.count?'':'（交接差 '+signedMoney(s.receivedCount-s.count)+'）'))+'</td><td>'+shiftCorrectionCell(s)+'</td></tr>').join('')+'</tbody></table></div>'+(shifts.length?'':'<p>这一天暂无班次。</p>')+'<p>'+(closed?'已日结 · '+esc(cashierLabel(closed.actor)):'确认前请核对现金和 TNG。')+'</p>'+(closed?'':'<button class="primary" onclick="confirmDayClose()">确认日结</button>');
+ view.innerHTML='<h1>账务</h1>'+accountingTabs()+'<p><label>营业日期 <input type="date" value="'+esc(closeDay)+'" onchange="closeDay=this.value;render()"></label></p><div class="grid">'+[['实收总额',money(cash+tng)],['现金销售',money(cash)],['TNG 实收',money(tng)],['成交单数',orders.length+' 单'],['堂食',dineIn+' 单'],['打包',takeaway+' 单'],['FOC',foc+' 个销售单位']].map(([name,value])=>'<div class="card">'+name+'<div class="total">'+value+'</div></div>').join('')+'</div><h2>班次和现金盘点</h2>'+(unassignedCash?'<p>老板直接收款（未归入钱箱班次）：'+money(unassignedCash)+'</p>':'')+'<div class="scroll"><table><thead><tr><th>值班人</th><th>备用金</th><th>应有现金</th><th>实点现金</th><th>实点差额</th><th>接班人实收</th><th>更正记录</th></tr></thead><tbody>'+shifts.map(s=>'<tr><td>'+cashierLabel(s.actor)+'</td><td>'+money(s.float)+'</td><td>'+money(s.expected??shiftExpected(s))+'</td><td>'+(s.count===undefined?'—':money(s.count))+'</td><td>'+(s.count===undefined?'—':signedMoney(s.count-s.expected))+'</td><td>'+(s.receivedCount===undefined?'—':cashierLabel(s.receivedBy)+' '+money(s.receivedCount)+(s.receivedCount===s.count?'':'（交接差 '+signedMoney(s.receivedCount-s.count)+'）'))+'</td><td>'+shiftCorrectionCell(s)+'</td></tr>').join('')+'</tbody></table></div>'+(shifts.length?'':'<p>这一天暂无班次。</p>')+'<p>'+(closed?'已日结 · '+esc(cashierLabel(closed.actor))+' · '+esc(attendanceTime(closed.at)):'确认前请核对现金和 TNG。')+'</p>'+(closed?'':'<button class="primary" onclick="confirmDayClose()">确认日结</button>')+exportButtons('close');
 }
 function confirmDayClose(){
  if(!canPreviewVisit('close')||db.dayCloses[closeDay])return;
@@ -777,7 +971,7 @@ function editDemoStaff(i){
 db.managerMonth??={view:true,export:true};
 db.demoManager??={account:'manager',name:'店长',password:'Manager2026',active:true,cash:true,stockRead:true,stockWrite:true,sales:true,close:true,attendance:true,attendanceEdit:true,staffAdmin:true};
 db.demoManager.attendanceEdit??=true;
-let reportMonth=today().slice(0,7);
+let reportMonth=today().slice(0,7),reportStart=reportMonth+'-01',reportEnd=lastDayOfMonth(reportMonth);
 function mayExportMonth(){
  return canPreviewVisit('month')&&(previewUser==='owner'||(previewUser==='manager'&&db.managerMonth.export));
 }
@@ -787,26 +981,90 @@ function managerStaffRow(){
  const permissions=[m.cash&&'点单与收款',m.sales&&'销售记录',(m.stockRead||m.stockWrite)&&'查看库存',m.stockWrite&&'盘点／补货／损耗',m.cash&&'现金交班',m.close&&'结帐',m.attendance&&'打卡',m.attendance&&m.attendanceEdit&&'修改打卡',m.staffAdmin&&'员工管理',db.managerMonth.view&&'查看月结',db.managerMonth.view&&db.managerMonth.export&&'导出月结'].filter(Boolean).join(' · ');
  return '<tr><th scope="row">'+esc(m.name)+'</th><td>manager</td><td>'+permissions+'</td><td>'+(m.active?'启用':'停用')+'</td><td><button onclick="editDemoStaff(-2)">编辑</button></td></tr>';
 }
+function accountingTabs(){
+ return '<nav class="accounting-tabs" aria-label="账务">'+[['close','日结'],['month','月结／日期范围']].filter(([key])=>canPreviewVisit(key)).map(([key,label])=>`<button class="${page===key?'primary':''}" aria-pressed="${page===key}" onclick="show('${key}')">${label}</button>`).join('')+'</nav>';
+}
+function lastDayOfMonth(month){
+ const [year,number]=month.split('-').map(Number);
+ return month+'-'+String(new Date(Date.UTC(year,number,0)).getUTCDate()).padStart(2,'0');
+}
+function selectReportMonth(month){
+ if(!month)return;
+ reportMonth=month;reportStart=month+'-01';reportEnd=lastDayOfMonth(month);
+ render();
+}
 function monthlyRows(){
- const days=new Map();
- for(const o of db.orders){
-  if(!o.method||!o.day?.startsWith(reportMonth+'-'))continue;
-  const d=days.get(o.day)||{date:o.day,cash:0,tng:0,count:0};
-  d[o.method==='现金'?'cash':'tng']+=o.received;
-  d.count++;days.set(o.day,d);
+ const dates=new Map();
+ for(const o of paidOrders(reportStart,reportEnd)){
+  if(!dates.has(o.day))dates.set(o.day,[]);
+  dates.get(o.day).push(o);
  }
- return [...days.values()].sort((a,b)=>a.date.localeCompare(b.date));
+ return [...dates].sort(([a],[b])=>a.localeCompare(b)).map(([date,orders])=>({date,...salesTotals(orders)}));
+}
+function monthReportTable(rows,format){
+ return {
+  title:'每日销售汇总',
+  headers:['日期','现金（RM）','TNG（RM）','实收合计（RM）','成交单数','堂食单数','打包单数','日结'],
+  rows:rows.map(d=>[d.date,format(d.cash),format(d.tng),format(d.cash+d.tng),d.count,d.dineIn,d.takeaway,db.dayCloses[d.date]?'已确认':'待确认'])
+ };
 }
 function renderMonth(){
  if(!canPreviewVisit('month'))return;
- const rows=monthlyRows(),cash=rows.reduce((s,d)=>s+d.cash,0),tng=rows.reduce((s,d)=>s+d.tng,0);
- view.innerHTML='<h1>月结</h1><p><label>营业月份 <input type="month" value="'+esc(reportMonth)+'" onchange="if(this.value){reportMonth=this.value;render()}"></label></p><div class="grid">'+[['实收总额',cash+tng],['现金',cash],['TNG',tng]].map(([k,v])=>'<div class="card">'+k+'<div class="total">'+money(v)+'</div></div>').join('')+'</div><h2>每日销售汇总</h2><div class="scroll"><table><thead><tr><th>日期</th><th>现金</th><th>TNG</th><th>订单数</th><th>日结</th></tr></thead><tbody>'+rows.map(d=>'<tr><td>'+esc(d.date)+'</td><td>'+money(d.cash)+'</td><td>'+money(d.tng)+'</td><td>'+d.count+'</td><td>'+(db.dayCloses[d.date]?'已确认':'待确认')+'</td></tr>').join('')+'</tbody></table></div>'+(rows.length?'':'<p>这个月暂无销售记录。</p>')+(mayExportMonth()?'<button class="primary" onclick="downloadMonth()">导出月结 CSV</button>':'');
+ const valid=reportStart&&reportEnd&&reportStart<=reportEnd;
+ view.innerHTML='<h1>账务</h1>'+accountingTabs()+
+  `<div class="report-filters">
+   <label>月份快捷选择 <input type="month" value="${esc(reportMonth)}" onchange="selectReportMonth(this.value)"></label>
+   <label>从 <input type="date" value="${esc(reportStart)}" onchange="reportStart=this.value;reportMonth='';render()"></label>
+   <label>到 <input type="date" value="${esc(reportEnd)}" onchange="reportEnd=this.value;reportMonth='';render()"></label>
+  </div>`;
+ if(!valid){view.innerHTML+='<p role="alert">请选择有效的开始和结束日期。</p>';return}
+ const daily=monthReportTable(monthlyRows(),money);
+ view.innerHTML+=salesCards(salesTotals(paidOrders(reportStart,reportEnd)))+
+  (mayExportMonth()?exportButtons('month'):'')+
+  '<h2>'+daily.title+'</h2><div class="scroll">'+reportTable(daily.headers,daily.rows)+'</div>'+
+  (daily.rows.length?'':'<p>这段日期暂无销售记录。</p>');
 }
-function downloadMonth(){
- if(!mayExportMonth())return;
- const csv=['日期,现金（RM）,TNG（RM）,实收合计（RM）,订单数',...monthlyRows().map(d=>[d.date,(d.cash/100).toFixed(2),(d.tng/100).toFixed(2),((d.cash+d.tng)/100).toFixed(2),d.count].join(','))].join(String.fromCharCode(13,10));
- const url=URL.createObjectURL(new Blob([String.fromCharCode(65279),csv],{type:'text/csv;charset=utf-8'}));
- const a=document.createElement('a');a.href=url;a.download='Bukit-Indah-'+reportMonth+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
+function salesReport(kind){
+ if(kind==='month'&&!mayExportMonth())return null;
+ if(kind!=='month'&&!canPreviewVisit(kind))return null;
+ const start=kind==='month'?reportStart:kind==='close'?closeDay:day,end=kind==='month'?reportEnd:start;
+ if(!start||!end||start>end)return null;
+ const orders=paidOrders(start,end),t=salesTotals(orders),format=n=>(n/100).toFixed(2);
+ const title={sales:'销售记录',close:'日结报表',month:'销售汇总'}[kind];
+ if(!title)return null;
+ const groups=[{title:'销售总览',headers:['实收合计（RM）','现金（RM）','TNG（RM）','成交单数','堂食单数','打包单数','FOC 数量'],rows:[[format(t.cash+t.tng),format(t.cash),format(t.tng),t.count,t.dineIn,t.takeaway,t.foc]]}];
+ if(kind==='month')groups.push(monthReportTable(monthlyRows(),format));
+ if(kind==='sales'){
+  groups.push({title:'商品销量',headers:['商品','单位','售出','FOC'],rows:productSales(orders).map(o=>[o.label,o.unit,o.sold,o.free])});
+  groups.push({title:'订单明细',headers:['单号','时间','用餐方式','桌位／打包号','付款方式','实收（RM）','收银员','商品'],rows:orders.map(o=>[o.number,attendanceTime(o.time),serviceType(o),o.slot?slotLabel(o.slot):'',o.method,format(o.received),o.cashier?cashierLabel(o.cashier):'',o.lines.map(l=>label(l)+' × '+l.q+(l.free?' FOC':'')).join('、')])});
+ }
+ if(kind==='close'){
+  const close=db.dayCloses[start];
+  groups.push({title:'日结状态',headers:['状态','确认人','确认时间'],rows:[[close?'已日结':'待日结',close?cashierLabel(close.actor):'',close?attendanceTime(close.at):'']]});
+  const ownerCash=orders.filter(o=>o.method==='现金'&&o.cashier==='owner'&&!o.shiftId).reduce((sum,o)=>sum+o.received,0);
+  groups.push({title:'班次外收款',headers:['老板直接收款（RM）'],rows:[[format(ownerCash)]]});
+  groups.push({title:'班次和现金盘点',headers:['值班人','备用金（RM）','应有现金（RM）','实点现金（RM）','实点差额（RM）','接班人','接班实收（RM）','更正记录'],rows:db.shifts.filter(s=>s.day===start).map(s=>{const expected=s.expected??shiftExpected(s);return [cashierLabel(s.actor),format(s.float),format(expected),s.count===undefined?'':format(s.count),s.count===undefined?'':format(s.count-expected),s.receivedBy?cashierLabel(s.receivedBy):'',s.receivedCount===undefined?'':format(s.receivedCount),(s.cashEdits||[]).map(e=>cashierLabel(e.by)+' · '+attendanceTime(e.at)+' · '+e.reason+' · '+e.changes.map(c=>shiftCashLabels[c.key]+' '+money(c.before)+' → '+money(c.after)).join('、')).join('；')];})});
+ }
+ return {title,period:start===end?start:start+' 至 '+end,filename:kind+'-'+start+(start===end?'':'_'+end),groups};
+}
+function exportSalesReport(kind,format){
+ const report=salesReport(kind);
+ if(!report)return;
+ if(format==='pdf'){
+  dialog('<article class="sales-report-print"><h1>包姐妹 · Bukit Indah · '+report.title+'</h1><p>'+esc(report.period)+'</p>'+report.groups.map(g=>'<h2>'+g.title+'</h2>'+reportTable(g.headers,g.rows)).join('')+'</article><button class="primary" onclick="window.print()">打印／存 PDF</button>');
+  return;
+ }
+ const csvCell=value=>{
+  let text=String(value??'');
+  if(/^[\s]*[=+@-]/.test(text)&&! /^-?\d+(?:\.\d+)?$/.test(text))text="'"+text;
+  return '"'+text.replaceAll('"','""')+'"';
+ };
+ const rows=[[report.title,report.period],...report.groups.flatMap(g=>[[],[g.title],g.headers,...g.rows])];
+ const csv=rows.map(row=>row.map(csvCell).join(',')).join('\r\n');
+ const url=URL.createObjectURL(new Blob(['\uFEFF',csv],{type:'text/csv;charset=utf-8'}));
+ const link=document.createElement('a');
+ link.href=url;link.download='Bukit-Indah-'+report.filename+'.csv';link.click();
+ setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
 if(hasPreviewOwnerSession())showPreviewAccount('owner','manager');
 else previewLogin();
