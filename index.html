@@ -16,9 +16,65 @@ body.foc-mode{min-height:100vh;background:#f2e9ff;color:#3f235a}body.foc-mode he
 .photo-frame.photo-full img{object-fit:contain}.stock-photo img{object-fit:contain}
 .service-layout{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:8px}.service-layout>section{display:grid;grid-template-columns:subgrid;grid-column:span 5;align-content:start}.service-layout>section:last-child{grid-column:span 2}.service-layout h2{grid-column:1/-1}.service-layout .service-grid{display:grid;grid-template-columns:subgrid;grid-column:1/-1;grid-auto-rows:minmax(88px,auto);gap:8px}.service-grid .slot{margin:0;padding:8px;overflow-wrap:anywhere}.line-controls{flex-wrap:wrap}.low-qty{color:#a64c00;font-weight:800}@media(max-width:800px){.service-layout{grid-template-columns:repeat(6,minmax(0,1fr))}.service-layout>section{grid-column:span 4}}@media(max-width:560px){.service-layout{grid-template-columns:repeat(4,minmax(0,1fr))}.service-layout>section,.service-layout>section:last-child{grid-column:1/-1}}
 #stock-entry,#order-qty{box-sizing:border-box;width:100%;max-width:100%}
-.customer-receipt{box-sizing:border-box;width:min(100%,320px);padding:12px;background:white;color:#111;font-size:14px}.customer-receipt h2{margin:0}.receipt-item{border-top:1px dashed #bbb;padding:7px 0}.receipt-item div,.receipt-total{display:flex;justify-content:space-between;gap:12px}.receipt-total{border-top:1px solid;padding-top:8px}.customer-receipt small{color:#555}
-@media print{body:has(.customer-receipt) > :not(dialog){display:none!important}body:has(.customer-receipt){background:white}dialog:has(.customer-receipt){position:static;inset:auto;margin:0;border:0;padding:0;box-shadow:none;max-height:none;overflow:visible}dialog:has(.customer-receipt)::backdrop{display:none}dialog:has(.customer-receipt)>button{display:none}.customer-receipt{width:100%;max-width:72mm}}
+.discount-preview{margin:12px 0;padding:10px 12px;border-radius:8px;background:#eef4ee}
+.discount-preview div{display:flex;justify-content:space-between;gap:12px}
+.discount-preview dd{margin:0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.discount-preview div:last-child{margin-top:4px;font-weight:700;color:#193d32}
+#discount-error:empty{display:none}
+.discount-actions{display:flex;align-items:center;gap:6px}
+.discount-actions button{margin:0}
+.customer-receipt{box-sizing:border-box;width:320px;max-width:100%;padding:12px;background:white;color:#111;font-size:14px;line-height:1.4;font-variant-numeric:tabular-nums}
+.receipt-heading{text-align:center;margin-bottom:10px}
+.receipt-heading h2,.receipt-heading p,.receipt-footer p{margin:0}
+.receipt-heading h2{font-size:1.5em}
+.receipt-heading .receipt-title{margin-top:6px;font-weight:700}
+.receipt-meta,.receipt-payment{margin:0;padding:8px 0;border-top:1px solid}
+.receipt-meta>div,.receipt-payment>div{display:flex;justify-content:space-between;gap:8px}
+.customer-receipt dt,.customer-receipt dd{margin:0}
+.customer-receipt dd{text-align:right;overflow-wrap:anywhere}
+.receipt-lines{border-collapse:collapse;width:100%;border-top:1px solid;line-height:1.3}
+.receipt-lines th,.receipt-lines td{padding:5px 2px;border:0;text-align:right;white-space:nowrap;vertical-align:top}
+.receipt-lines th:first-child,.receipt-lines td:first-child{text-align:left;white-space:normal;overflow-wrap:anywhere}
+.receipt-lines th{border-bottom:1px solid;font-size:.9em}
+.receipt-lines tr{break-inside:avoid}
+.receipt-payment .receipt-total{font-size:1.12em;font-weight:700;margin-bottom:4px}
+.receipt-footer{text-align:center;border-top:1px dashed;padding-top:8px}
+.receipt-footer small{font-size:.85em}
+@media print{
+ body:has(#modal[open] .customer-receipt) > :not(#modal){display:none!important}
+ body:has(#modal[open] .customer-receipt){background:white}
+ #modal[open]:has(.customer-receipt){position:static;inset:auto;margin:0;padding:0;border:0;box-shadow:none;max-height:none;max-width:100%;overflow:visible}
+ #modal[open]:has(.customer-receipt)::backdrop{display:none}
+ #modal[open]:has(.customer-receipt)>button{display:none}
+ .customer-receipt{width:100%;max-width:72mm;padding:2mm;font-size:10pt}
+}
 #change strong{color:#a64c00}
+.order-layout{grid-template-columns:minmax(0,1.7fr) minmax(340px,1fr);align-items:start}
+.order-panel{min-width:0;position:sticky;top:12px}
+.order-panel h2{margin:0 0 12px}
+.order-list{max-height:min(43dvh,29rem);overflow:auto;overscroll-behavior:contain}
+.order-list table{font-variant-numeric:tabular-nums}
+.order-list th{background:#eef4ee;font-size:.85rem;position:sticky;top:0;z-index:1}
+.order-list th,.order-list td{padding:8px 4px;vertical-align:middle}
+.order-list th:first-child,.order-list td:first-child{padding-left:8px;overflow-wrap:anywhere}
+.order-list th:nth-child(2){text-align:center}
+.order-list th:last-child,.order-list td:last-child{text-align:right;padding-right:8px;white-space:nowrap}
+.order-list .line-price{font-size:.78rem;white-space:normal;margin-top:3px}
+.order-qty-controls{display:grid;grid-template-columns:repeat(3,minmax(34px,auto));gap:3px;justify-content:center}
+.order-qty-controls button{min-width:34px;min-height:44px;padding:4px;margin:0}
+.order-qty-controls button:nth-child(2){font-weight:700}
+.order-remove{display:block;margin:1px 0 0 auto;padding:4px 7px;color:#8b3730;font-size:.78rem;min-height:36px}
+.order-empty{padding:8px 0;color:#495e50}
+.order-summary{display:grid;gap:4px;margin:12px 0;padding:10px 12px;background:#eef4ee;border-radius:9px;font-variant-numeric:tabular-nums}
+.order-summary>div{display:flex;justify-content:space-between;gap:8px}
+.order-summary dd{margin:0;text-align:right;white-space:nowrap}
+.order-summary .order-due{border-top:1px solid #bdccbf;margin-top:3px;padding-top:6px;align-items:center;font-weight:700}
+.order-summary .order-due dd{font-size:1.33rem;color:#193d32}
+.order-panel .order-pay{width:100%;margin:0 0 8px;min-height:48px;font-weight:700}
+.order-actions{display:flex;flex-wrap:wrap;gap:6px}
+.order-actions button{margin:0;min-height:44px;padding:7px 10px}
+@media(max-width:760px){.order-layout{grid-template-columns:1fr}.order-panel{position:static}}
+@media(max-width:370px){.order-list th,.order-list td{padding-left:2px;padding-right:2px}.order-qty-controls{gap:2px}}
 </style>
 <header><strong>包姐妹 · Bukit Indah 档口 POS</strong><button onclick="show('home')">点单</button><button onclick="show('sales')">销售记录</button><button onclick="show('stock')">库存管理</button><button onclick="show('shift')">现金交班</button><button onclick="show('close')">结帐</button><button onclick="show('attendance')">打卡</button><button onclick="show('staff-admin')">员工管理</button><button onclick="show('month')">月结</button></header>
 <main><div id="notice" role="status"></div><div id="view"></div></main><dialog id="modal"></dialog>
@@ -46,7 +102,20 @@ const griddleProduct=p=>catalog[p][2]==='片'||catalog[p][0]==='生煎包';
 const productSymbol=(p,frozen)=>frozen?'❄️':catalog[p][2]==='罐'?'🫙':griddleProduct(p)?'🥞':'♨️';
 const label=l=>[productSymbol(l.p,l.frozen),catalog[l.p][0]].filter(Boolean).join(' ');
 const sellUnit=l=>l.frozen?'包':catalog[l.p][2];
-const total=o=>o.lines.reduce((s,l)=>s+(l.free?0:catalog[l.p][1]*factor(l)*l.q),0);
+const orderSubtotal=o=>o.lines.reduce((s,l)=>s+(l.free?0:catalog[l.p][1]*factor(l)*l.q),0);
+const discountAmount=(o,subtotal=orderSubtotal(o))=>o.discountRate===undefined
+ ?Math.min(o.discount??0,subtotal)
+ :Math.round(subtotal*o.discountRate/10000);
+const discountLabel=o=>o.discountRate?'折扣 '+(o.discountRate/100)+'%':'折扣';
+const total=o=>orderSubtotal(o)-discountAmount(o);
+function orderTotals(o){
+ const subtotal=orderSubtotal(o),discount=discountAmount(o);
+ return `<dl class="order-summary">
+  <div><dt>商品小计</dt><dd>${money(subtotal)}</dd></div>
+  ${discount||o.discountRate?`<div><dt>${discountLabel(o)}</dt><dd>−${money(discount)}</dd></div>`:''}
+  <div class="order-due"><dt>应收金额</dt><dd>${money(subtotal-discount)}</dd></div>
+ </dl>`;
+}
 const order=()=>db.orders.find(o=>o.id===current);
 const occupied=o=>!o.cancelled&&o.lines.length>0&&(!o.method||o.lines.some(l=>l.given<l.q));
 const remaining=p=>db.stock[p]-db.orders.filter(o=>o.reserved&&!o.method&&!o.cancelled).flatMap(o=>o.lines).reduce((s,l)=>s+(l.p===p?l.q*factor(l):0),0);
@@ -97,13 +166,60 @@ function render(){
  if(page==='stock'){renderStock();return}
  renderSales();
 }
-function renderOrder(){const o=order();
- const lines=o.lines.map((l,i)=>{
-  const unit=sellUnit(l), price=money(l.free?0:catalog[l.p][1]*factor(l));
-  const controls=o.method?(l.given<l.q?'<button onclick="give('+i+')">交付 1 '+unit+'</button>':''):'<button onclick="changeQty('+i+',-1)">−</button><button onclick="openOrderQty('+i+')">改数量</button><button onclick="changeQty('+i+',1)">＋</button>';
-  return '<div class="line order-line"><div><strong>'+esc(label(l))+' <span class="'+(remaining(l.p)>0&&remaining(l.p)<=5?'low-qty':'')+'">× '+l.q+'</span>'+'</strong><span class="line-price">'+price+'／'+unit+(l.free?' · FOC':'')+'</span>'+(o.method?'<small>已交 '+l.given+'／'+l.q+'</small>':'')+'</div><div class="line-controls">'+controls+'</div></div>';
+function renderOrder(){
+ const o=order();
+ const heading='<h1>'+slotLabel(o.slot)+' 号 <small>'+state(o)+'</small>'+timing(o)+'</h1>';
+ if(o.method){
+  const lines=o.lines.map((line,i)=>{
+   const unit=sellUnit(line),price=money(line.free?0:catalog[line.p][1]*factor(line));
+   return `<div class="line order-line">
+    <div><strong>${esc(label(line))} <span class="${remaining(line.p)>0&&remaining(line.p)<=5?'low-qty':''}">× ${line.q}</span></strong>
+    <span class="line-price">${price}/${unit}${line.free?' · FOC':''}</span>
+    <small>已交 ${line.given}／${line.q}</small></div>
+    ${line.given<line.q?`<button onclick="give(${i})">交付 1 ${unit}</button>`:''}
+   </div>`;
+  }).join('');
+  view.innerHTML=heading+'<div class="card">'+lines+'<div class="flex"><button class="primary" onclick="giveAll()">全部交付</button></div></div>';
+  return;
+ }
+ const rows=o.lines.map((line,i)=>{
+  const unit=sellUnit(line),price=line.free?0:catalog[line.p][1]*factor(line);
+  const availableStock=remaining(line.p);
+  const low=availableStock>0&&availableStock<=5;
+  const name=esc(label(line));
+  return `<tr>
+   <td><strong>${name}</strong><span class="line-price">${money(price)}/${unit}${line.free?' · FOC':''}</span></td>
+   <td><div class="order-qty-controls">
+    <button onclick="changeQty(${i},-1)" aria-label="减少 ${name} 数量">−</button>
+    <button onclick="openOrderQty(${i})" aria-label="改数量 ${name}，当前 ${line.q} ${unit}" ${low?'class="low-qty"':''}>${line.q}</button>
+    <button onclick="changeQty(${i},1)" aria-label="增加 ${name} 数量">+</button>
+   </div></td>
+   <td>${money(price*line.q)}<button class="order-remove" onclick="removeOrderLine(${i})" aria-label="移除 ${name}">移除</button></td>
+  </tr>`;
  }).join('');
- view.innerHTML='<h1>'+slotLabel(o.slot)+' 号 <small>'+state(o)+'</small>'+timing(o)+'</h1>'+(o.method?'<div class="card">'+lines+'<div class="flex"><button class="primary" onclick="giveAll()">全部交付</button></div></div>':'<div class="split"><section>'+renderCatalog()+'</section><aside class="card"><h2>当前订单</h2>'+(lines||'请选择商品')+'<p class="total">'+money(total(o))+'</p><div class="flex"><button onclick="show(\'home\')">挂单／回点单</button>'+(o.reserved?'<button onclick="releaseReservation()">释放预留</button>':'')+'<button onclick="clearOrderLines()" '+(!o.lines.length?'disabled':'')+'>清空</button><button onclick="cancel()">取消单</button><button class="primary" '+(!o.lines.length?'disabled':'')+' onclick="checkout()">结账</button></div></aside></div>');
+ const list=rows?`<div class="order-list"><table aria-label="订单商品">
+  <thead><tr><th scope="col">商品</th><th scope="col">数量</th><th scope="col">小计</th></tr></thead>
+  <tbody>${rows}</tbody>
+ </table></div>`:'<p class="order-empty">请选择商品</p>';
+ view.innerHTML=heading+`<div class="split order-layout">
+  <section>${renderCatalog()}</section>
+  <aside class="card order-panel">
+   <h2>当前订单</h2>
+   ${list}${orderTotals(o)}
+   <button class="primary order-pay" ${o.lines.length?'':'disabled'} onclick="checkout()">结账</button>
+   <div class="order-actions">
+    <button onclick="openDiscount()" ${!orderSubtotal(o)&&!o.discountRate?'disabled':''}>${discountAmount(o)||o.discountRate?'修改折扣':'整单折扣'}</button>
+    <button onclick="show('home')">挂单／回点单</button>
+    ${o.reserved?'<button onclick="releaseReservation()">释放预留</button>':''}
+    <button onclick="clearOrderLines()" ${o.lines.length?'':'disabled'}>清空</button>
+    <button onclick="cancel()">取消单</button>
+   </div>
+  </aside>
+ </div>`;
+}
+function removeOrderLine(i){
+ const o=order(),line=o?.lines[i];
+ if(!o?.method&&line)changeQty(i,-line.q);
 }
 function renderCatalog(){
  const groups=[['hot','♨️ 包子／馒头',p=>catalog[p][2]!=='罐'&&!griddleProduct(p)],['griddle','🥞 烙饼',griddleProduct],['frozen','❄️ 冷冻',p=>!!catalog[p][3]],['jar','🫙 罐装',p=>catalog[p][2]==='罐']];
@@ -123,12 +239,12 @@ function setFilter(f){if(foc)focFilter=f;else filter=f;render()}
 function toggleFoc(){foc=!foc;if(foc)focFilter='hot';render()}
 function available(o,lines){return catalog.every((_,p)=>lines.reduce((s,l)=>s+(l.p===p?l.q*factor(l):0),0)<=remaining(p)+(o.reserved?o.lines.reduce((s,l)=>s+(l.p===p?l.q*factor(l):0),0):0))}
 function add(p,frozen){const o=order(),lines=o.lines.map(l=>({...l})),l=lines.find(x=>x.p===p&&x.frozen===frozen&&x.free===foc);if(l)l.q++;else lines.push({p,frozen,free:foc,q:1,given:0});if(!available(o,lines)){tell('可卖库存不足');return}o.startedAt??=new Date().toISOString();o.lines=lines;tell('');save()}
-function changeQty(i,d){const o=order(),lines=o.lines.map(l=>({...l}));lines[i].q+=d;if(!lines[i].q)lines.splice(i,1);if(d>0&&!available(o,lines)){tell('可卖库存不足');return}o.lines=lines;save()}
+function changeQty(i,d){const o=order(),lines=o.lines.map(l=>({...l}));lines[i].q+=d;if(!lines[i].q)lines.splice(i,1);if(d>0&&!available(o,lines)){tell('可卖库存不足');return}o.lines=lines;if(!lines.length)delete o.discountRate;if(o.discount!==undefined)o.discount=discountAmount(o);save()}
 function releaseReservation(){order().reserved=false;save()}
 function clearOrderLines(){
  const o=order();
  if(!o||o.method||!o.lines.length||!confirm('清空当前订单的所有商品？'))return;
- o.lines=[];o.reserved=false;delete o.startedAt;foc=false;tell('已清空，可以重新点单。');save();
+ o.lines=[];o.reserved=false;delete o.startedAt;delete o.discount;delete o.discountRate;foc=false;tell('已清空，可以重新点单。');save();
 }
 function cancel(){if(confirm('取消这张未付款订单？')){order().cancelled=true;show('home');save()}}
 function give(i){order().lines[i].given++;save();if(!occupied(order()))show('home')}
@@ -164,15 +280,70 @@ function confirmOrderQty(i){
  changeQty(i,qty-o.lines[i].q);
 }
 function giveAll(){order().lines.forEach(l=>l.given=l.q);save();show('home')}
-function dialog(html){modal.innerHTML=html+'<button onclick="modal.close()">关闭</button>';modal.showModal()}
-function checkout(){const due=total(order());
- dialog('<h2>应收 '+money(due)+'</h2><label>实收金额 <input id="cash" inputmode="decimal" size="8"></label><p id="change" role="status"></p><div class="flex"><button onclick="preset('+due+')">刚好</button>'+[10,20,50].map(n=>'<button onclick="preset('+n*100+')">RM'+n+'</button>').join('')+'</div><div class="keys">'+['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(k=>'<button onclick="digit(\''+k+'\')">'+k+'</button>').join('')+'</div><label><input id="handoff" type="checkbox"> 同时标为已取餐</label><div class="flex"><button class="primary" onclick="pay(\'现金\')">确认现金</button><button class="primary" onclick="pay(\'TNG\')">确认 TNG 到账</button></div>');cash.oninput=changeDisplay
+function dialog(html,includeClose=true){modal.innerHTML=html+(includeClose?'<button onclick="modal.close()">关闭</button>':'');modal.showModal()}
+function openDiscount(){
+ const o=order(),subtotal=orderSubtotal(o);
+ if(o.method||(!subtotal&&!o.discountRate))return;
+ const saved=o.discountRate??0;
+ const legacyDiscount=o.discountRate===undefined?discountAmount(o):0;
+ dialog(`<form id="order-discount">
+  <h2>整单折扣</h2>
+  <p>商品小计 ${money(subtotal)}</p>
+  <label>折扣比例（%）<br><input name="discount" inputmode="decimal" placeholder="例如 10" value="${saved?saved/100:''}"></label>
+  ${legacyDiscount?'<p>目前折扣 '+money(legacyDiscount)+'。输入百分比后会取代原折扣。</p>':''}
+  <dl class="discount-preview" aria-live="polite" aria-atomic="true">
+   <div><dt>折扣金额</dt><dd id="discount-deduction"></dd></div>
+   <div><dt>折后应收</dt><dd id="discount-due"></dd></div>
+  </dl>
+  <p id="discount-error" role="alert"></p>
+  <div class="discount-actions">
+   <button type="submit" class="primary">应用折扣</button>
+   <button type="button" onclick="modal.close()">关闭</button>
+  </div>
+  ${(saved||legacyDiscount)?'<button type="button" id="remove-discount">移除折扣</button>':''}
+ </form>`,false);
+ const form=document.querySelector('#order-discount'),input=form.elements.discount;
+ const deduction=document.querySelector('#discount-deduction'),due=document.querySelector('#discount-due');
+ const error=document.querySelector('#discount-error');
+ const readRate=()=>{
+  const rate=parseDecimalHundredths(input.value.trim());
+  return Number.isSafeInteger(rate)&&rate<=10000?rate:null;
+ };
+ const updatePreview=()=>{
+  const rate=readRate();
+  const amount=input.value.trim()===''?legacyDiscount:rate===null?null:discountAmount({discountRate:rate},subtotal);
+  deduction.textContent=amount===null?'—':'−'+money(amount);
+  due.textContent=amount===null?'—':money(subtotal-amount);
+ };
+ input.addEventListener('input',()=>{error.textContent='';updatePreview()});
+ updatePreview();
+ form.onsubmit=event=>{
+  event.preventDefault();
+  const rate=readRate();
+  if(rate===null){
+   error.textContent='请输入 0 至 100 的百分比，最多两位小数。';
+   return;
+  }
+  delete o.discount;
+  if(rate) o.discountRate=rate;
+  else delete o.discountRate;
+  modal.close();
+  save();
+ };
+ const remove=document.querySelector('#remove-discount');
+ if(remove)remove.onclick=()=>{delete o.discount;delete o.discountRate;modal.close();save()};
+ input.focus();
+ input.select();
+}
+function checkout(){const o=order(),due=total(o);
+ dialog('<h2>应收 '+money(due)+'</h2>'+((discountAmount(o)||o.discountRate)?'<p>'+discountLabel(o)+' −'+money(discountAmount(o))+'</p>':'')+'<label>实收金额 <input id="cash" inputmode="decimal" size="8"></label><p id="change" role="status"></p><div class="flex"><button onclick="preset('+due+')">刚好</button>'+[10,20,50].map(n=>'<button onclick="preset('+n*100+')">RM'+n+'</button>').join('')+'</div><div class="keys">'+['1','2','3','4','5','6','7','8','9','.','0','⌫'].map(k=>'<button onclick="digit(\''+k+'\')">'+k+'</button>').join('')+'</div><label><input id="handoff" type="checkbox"> 同时标为已取餐</label><div class="flex"><button class="primary" onclick="pay(\'现金\')">确认现金</button><button class="primary" onclick="pay(\'TNG\')">确认 TNG 到账</button></div>');cash.oninput=changeDisplay
 }
 function preset(c){cash.value=(c/100).toFixed(2);changeDisplay()}
 function digit(k){cash.value=k==='⌫'?cash.value.slice(0,-1):cash.value+k;changeDisplay()}
-function cashCents(){return /^\d+(\.\d{0,2})?$/.test(cash.value)?Math.round(Number(cash.value)*100):NaN}
+function parseDecimalHundredths(value){return /^\d+(\.\d{0,2})?$/.test(value)?Math.round(Number(value)*100):NaN}
+function cashCents(){return parseDecimalHundredths(cash.value)}
 function changeDisplay(){const c=cashCents()-total(order()),output=document.querySelector('#change');if(Number.isFinite(c)&&c>=0){output.innerHTML='<span>找零</span><strong>'+money(c)+'</strong>'}else{output.textContent='请输入足够的实收金额'}}
-function pay(method){const o=order(),due=total(o),shift=openShift(),isOwner=previewUser==='owner';if(db.dayCloses[today()]){modal.close();tell('今天已结帐。');return}if(!isOwner&&!shift){modal.close();tell('请先在「现金交班」开班或接班。');show('shift');tell('请先开班或接班，再收款。');return}if(!isOwner&&shift.actor!==previewUser){modal.close();show('shift');tell('当前钱箱由另一位员工值班。');return}if(!available(o,o.lines)){modal.close();tell('库存不足，请确认商品与数量');return}if(method==='现金'&&!(cashCents()>=due)){changeDisplay();return}const d=today();db.seq[d]=(db.seq[d]||0)+1;o.number=d.replaceAll('-','')+'-'+String(db.seq[d]).padStart(3,'0');o.day=d;o.time=new Date().toISOString();o.method=method;o.received=due;o.receipt=makeReceipt(o,method==='现金'?cashCents():null);o.shiftId=shift?.actor===previewUser?shift.id:null;o.cashier=previewUser;o.reserved=false;o.lines.forEach(l=>{db.stock[l.p]-=l.q*factor(l);if(handoff.checked)l.given=l.q});modal.close();show('home');save();openReceipt(o.id)}
+function pay(method){const o=order();if(!o||o.method||!o.lines.length)return;const due=total(o),shift=openShift(),isOwner=previewUser==='owner';if(db.dayCloses[today()]){modal.close();tell('今天已结帐。');return}if(!isOwner&&!shift){modal.close();tell('请先在「现金交班」开班或接班。');show('shift');tell('请先开班或接班，再收款。');return}if(!isOwner&&shift.actor!==previewUser){modal.close();show('shift');tell('当前钱箱由另一位员工值班。');return}if(!available(o,o.lines)){modal.close();tell('库存不足，请确认商品与数量');return}if(method==='现金'&&!(cashCents()>=due)){changeDisplay();return}const d=today();db.seq[d]=(db.seq[d]||0)+1;o.number=d.replaceAll('-','')+'-'+String(db.seq[d]).padStart(3,'0');o.day=d;o.time=new Date().toISOString();o.method=method;o.received=due;o.cashier=previewUser;o.receipt=makeReceipt(o,method==='现金'?cashCents():null);o.shiftId=shift?.actor===previewUser?shift.id:null;o.reserved=false;o.lines.forEach(l=>{db.stock[l.p]-=l.q*factor(l);if(handoff.checked)l.given=l.q});modal.close();show('home');save();openReceipt(o.id)}
 function pendingStockCount(){return new Set(stockDrafts.flatMap(draft=>[...draft.keys()])).size}
 function renderStock(){
  const products=stockOrder();
@@ -248,22 +419,61 @@ function renderSales(){const orders=db.orders.filter(o=>o.method&&o.day===day),s
 }
 function listOrders(){document.querySelector('#salesList').innerHTML=db.orders.filter(o=>o.method&&o.day===day&&[o.number,...o.lines.map(label)].some(s=>s.includes(search.trim()))).reverse().map(o=>'<div class="line"><strong>'+o.number+'</strong> · '+new Date(o.time).toLocaleTimeString('en-MY',{timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit'})+' · '+o.method+' · '+money(o.received)+' · '+esc(o.lines.map(l=>label(l)+' × '+l.q).join('、'))+' <button onclick="details(\''+o.id+'\')">查看／更正</button></div>').join('')||'没有符合条件的订单'}
 function makeReceipt(o,tendered){
- return {number:o.number,time:o.time,slot:o.slot,method:o.method,total:o.received,tendered,lines:o.lines.map(l=>({
+ return {number:o.number,time:o.time,slot:o.slot,cashier:cashierLabel(o.cashier),method:o.method,subtotal:orderSubtotal(o),discount:discountAmount(o),discountRate:o.discountRate,total:o.received,tendered,lines:o.lines.map(l=>({
   name:catalog[l.p][0],unit:sellUnit(l),frozen:l.frozen,free:l.free,quantity:l.q,price:l.free?0:catalog[l.p][1]*factor(l)
  }))};
 }
+function receiptMarkup(receipt){
+ const row=(label,value,className='')=>`<div class="${className}"><dt>${label}</dt><dd>${esc(value)}</dd></div>`;
+ const lines=receipt.lines.map(line=>`
+  <tr>
+   <td>${esc(line.name)}${line.frozen?' · 冷冻':''}${line.free?' · FOC':''}</td>
+   <td>${esc(line.quantity)} ${esc(line.unit)}</td>
+   <td>${(line.price/100).toFixed(2)}</td>
+   <td>${(line.quantity*line.price/100).toFixed(2)}</td>
+  </tr>`).join('');
+ return `<article class="customer-receipt">
+  <div class="receipt-heading">
+   <h2>包姐妹</h2><p>BAO SISTERS · Bukit Indah</p>
+   <p class="receipt-title">收据 / Receipt</p>
+  </div>
+  <dl class="receipt-meta">
+   ${row('单号',receipt.number)}
+   ${row('日期时间',attendanceTime(receipt.time))}
+   ${row(receipt.slot>40?'打包号':'桌位号',slotLabel(receipt.slot))}
+   ${row('收银员',receipt.cashier||'—')}
+  </dl>
+  <table class="receipt-lines">
+   <thead><tr><th scope="col">商品</th><th scope="col">数量</th><th scope="col">单价</th><th scope="col">金额 (RM)</th></tr></thead>
+   <tbody>${lines}</tbody>
+  </table>
+  <dl class="receipt-payment">
+   ${receipt.discount||receipt.discountRate?row('商品小计',money(receipt.subtotal))+row(discountLabel(receipt),'−'+money(receipt.discount)):''}
+   ${row('合计',money(receipt.total),'receipt-total')}
+   ${row('付款方式',receipt.method)}
+   ${Number.isFinite(receipt.tendered)
+    ?row('现金实收',money(receipt.tendered))+row('找零',money(receipt.tendered-receipt.total))
+    :receipt.method==='TNG'?row('TNG 到账',money(receipt.total)):''}
+  </dl>
+  <div class="receipt-footer"><p>谢谢惠顾</p><small>试用收据 · DEMO</small></div>
+ </article>`;
+}
 function openReceipt(id){
- const receipt=db.orders.find(o=>o.id===id&&o.method)?.receipt;
- if(!receipt)return;
- const lines=receipt.lines.map(l=>'<div class="receipt-item"><strong>'+esc(l.name)+(l.frozen?' · 冷冻':'')+(l.free?' · FOC':'')+'</strong><div><span>'+l.quantity+' '+esc(l.unit)+' × '+money(l.price)+'</span><span>'+money(l.quantity*l.price)+'</span></div></div>').join('');
- dialog('<article class="customer-receipt"><h2>包姐妹 · Bukit Indah</h2><p>Receipt / 顾客收据</p><p>单号 '+esc(receipt.number)+'<br>'+esc(attendanceTime(receipt.time))+'<br>'+(receipt.slot>40?'打包 ':'桌位 ')+slotLabel(receipt.slot)+'</p>'+lines+'<div class="receipt-total"><span>Total / 实收</span><strong>'+money(receipt.total)+'</strong></div><p>付款方式 '+esc(receipt.method)+(receipt.tendered===null?'':'<br>现金收取 '+money(receipt.tendered)+'<br>找零 '+money(receipt.tendered-receipt.total))+'</p><small>试用收据 · DEMO</small></article><button class="primary" onclick="window.print()">打印收据</button>');
+ const orderWithReceipt=db.orders.find(o=>o.id===id&&o.method);
+ if(!orderWithReceipt?.receipt)return;
+ const receipt=orderWithReceipt.receipt;
+ const cashier=receipt.cashier||(orderWithReceipt.cashier?cashierLabel(orderWithReceipt.cashier):'');
+ dialog(receiptMarkup({...receipt,cashier})+'<button class="primary" onclick="window.print()">打印收据</button>');
 }
 function details(id){current=id;const o=order();dialog('<h2>'+o.number+'</h2><p>'+state(o)+' · '+o.method+' · '+money(o.received)+'</p>'+(o.receipt?'<button onclick="modal.close();openReceipt(current)">查看原收据</button>':'')+o.lines.map((l,i)=>'<div class="line">'+esc(label(l))+' × '+l.q+(l.free?' · FOC':'')+' <button onclick="modal.close();correct('+i+')">更正商品</button></div>').join('')+o.history.map(h=>'<p>'+esc(h)+'</p>').join(''))}
 function correct(i){const l=order().lines[i];dialog('<h2>更正 '+esc(label(l))+'</h2><select id="replacement" onchange="diff('+i+')">'+catalog.flatMap((a,p)=>[false,true].filter(f=>!f||a[3]).map(f=>'<option value="'+p+','+Number(f)+'">'+esc(label({p,frozen:f}))+'</option>')).join('')+'</select><p id="difference"></p><input id="reason" placeholder="更正原因"><select id="settled"><option value="0">保留实收并记价差</option><option value="1">已实际补收／退款</option></select><button class="primary" onclick="applyCorrection('+i+')">保存更正</button>');replacement.value=l.p+','+Number(l.frozen);diff(i)}
 function replacementLine(l){const [p,f]=replacement.value.split(',').map(Number);return {...l,p,frozen:!!f}}
-function priceDiff(l,n){return l.free?0:(catalog[n.p][1]*factor(n)-catalog[l.p][1]*factor(l))*l.q}
-function diff(i){const l=order().lines[i];difference.textContent='价差 '+money(priceDiff(l,replacementLine(l)))}
-function applyCorrection(i){const o=order(),l=o.lines[i],n=replacementLine(l),delta=priceDiff(l,n);if(!reason.value.trim()){difference.textContent='请填写更正原因';return}if(l.p===n.p&&l.frozen===n.frozen)return;if(remaining(n.p)+(n.p===l.p?l.q*factor(l):0)<n.q*factor(n)){difference.textContent='更正后的商品库存不足';return}if(settled.value==='1'&&o.received+delta<0){difference.textContent='退款金额超过实收';return}db.stock[l.p]+=l.q*factor(l);db.stock[n.p]-=n.q*factor(n);o.lines[i]=n;if(settled.value==='1')o.received+=delta;o.history.push(today()+' '+new Date().toLocaleTimeString('en-MY',{timeZone:'Asia/Kuala_Lumpur'})+' · '+label(l)+' → '+label(n)+' × '+l.q+' · '+reason.value.trim()+' · 价差 '+money(delta)+' · '+(settled.value==='1'?'已结算':'保留实收'));modal.close();save();details(o.id)}
+function priceDiff(o,l,n){
+ const before=orderSubtotal(o),after=before+(l.free?0:(catalog[n.p][1]*factor(n)-catalog[l.p][1]*factor(l))*l.q);
+ return (after-discountAmount(o,after))-(before-discountAmount(o,before));
+}
+function diff(i){const l=order().lines[i];difference.textContent='价差 '+money(priceDiff(order(),l,replacementLine(l)))}
+function applyCorrection(i){const o=order(),l=o.lines[i],n=replacementLine(l),delta=priceDiff(o,l,n);if(!reason.value.trim()){difference.textContent='请填写更正原因';return}if(l.p===n.p&&l.frozen===n.frozen)return;if(remaining(n.p)+(n.p===l.p?l.q*factor(l):0)<n.q*factor(n)){difference.textContent='更正后的商品库存不足';return}if(settled.value==='1'&&o.received+delta<0){difference.textContent='退款金额超过实收';return}db.stock[l.p]+=l.q*factor(l);db.stock[n.p]-=n.q*factor(n);o.lines[i]=n;if(settled.value==='1')o.received+=delta;o.history.push(today()+' '+new Date().toLocaleTimeString('en-MY',{timeZone:'Asia/Kuala_Lumpur'})+' · '+label(l)+' → '+label(n)+' × '+l.q+' · '+reason.value.trim()+' · 价差 '+money(delta)+' · '+(settled.value==='1'?'已结算':'保留实收'));modal.close();save();details(o.id)}
 function backup(){const url=URL.createObjectURL(new Blob([JSON.stringify(db,null,2)],{type:'application/json'})),link=document.createElement('a');link.href=url;link.download='BaoSisters-Bukit-Indah-'+today()+'.json';link.click();setTimeout(()=>URL.revokeObjectURL(url),1000)}
 render();
 setInterval(refreshWait,1000);
@@ -272,8 +482,19 @@ const previewHeader=document.querySelector('header');
 const previewNav=[...previewHeader.querySelectorAll('button')];
 const previewShow=show;
 let previewRole=null,previewUser=null;
+const ownerSessionKey='bao-sisters-bukit-indah-preview-owner';
+function rememberPreviewOwner(keep){
+ try{
+  if(keep)sessionStorage.setItem(ownerSessionKey,'1');
+  else sessionStorage.removeItem(ownerSessionKey);
+ }catch{}
+}
+function hasPreviewOwnerSession(){
+ try{return sessionStorage.getItem(ownerSessionKey)==='1'}catch{return false}
+}
 function previewLogin(){
- previewRole=null;foc=false;document.body.classList.remove('foc-mode');
+ rememberPreviewOwner(false);
+ previewRole=null;previewUser=null;foc=false;document.body.classList.remove('foc-mode');
  previewNav.forEach(b=>b.hidden=true);
  document.querySelector('#preview-account')?.remove();
  tell('');
@@ -284,20 +505,26 @@ function previewLogin(){
  document.querySelector('#preview-form').onsubmit=event=>{
   event.preventDefault();
   const fields=new FormData(event.currentTarget),account=fields.get('account'),password=fields.get('password');
-  if(account==='owner'&&password==='Owner2026')previewRole='manager';
-  else if(account==='manager'&&db.demoManager.active&&password===db.demoManager.password)previewRole='manager';
-  else if(getDemoStaff(account)?.active&&getDemoStaff(account).password===password)previewRole='staff';
+  let role;
+  if(account==='owner'&&password==='Owner2026')role='manager';
+  else if(account==='manager'&&db.demoManager.active&&password===db.demoManager.password)role='manager';
+  else if(getDemoStaff(account)?.active&&getDemoStaff(account).password===password)role='staff';
   else{document.querySelector('#preview-error').textContent='测试账号或密码不正确';return}
-  previewUser=account;
-  previewNav.forEach((b,i)=>b.hidden=!canPreviewVisit(['home','sales','stock','shift','close','attendance','staff-admin','month'][i]));
-  const session=document.createElement('span'),button=document.createElement('button');
-  session.id='preview-account';
-  session.textContent=account==='owner'?'老板演示':previewRole==='manager'?'店长演示':cashierLabel(account);
-  button.textContent='退出';button.onclick=previewLogin;
-  session.append(' ',button);previewHeader.append(session);
-  const landing=['home','attendance','stock','shift','close','sales','staff-admin','month'].find(canPreviewVisit);
-  if(landing)previewShow(landing);else view.innerHTML='<h1>当前账号暂无可用权限</h1>';
+  rememberPreviewOwner(account==='owner');
+  showPreviewAccount(account,role);
  };
+}
+function showPreviewAccount(account,role){
+ previewRole=role;
+ previewUser=account;
+ previewNav.forEach((b,i)=>b.hidden=!canPreviewVisit(['home','sales','stock','shift','close','attendance','staff-admin','month'][i]));
+ const session=document.createElement('span'),button=document.createElement('button');
+ session.id='preview-account';
+ session.textContent=account==='owner'?'老板演示':previewRole==='manager'?'店长演示':cashierLabel(account);
+ button.textContent='退出';button.onclick=previewLogin;
+ session.append(' ',button);previewHeader.append(session);
+ const landing=['home','attendance','stock','shift','close','sales','staff-admin','month'].find(canPreviewVisit);
+ if(landing)previewShow(landing);else view.innerHTML='<h1>当前账号暂无可用权限</h1>';
 }
 show=p=>{
  if(!canPreviewVisit(p))return;
@@ -581,6 +808,7 @@ function downloadMonth(){
  const url=URL.createObjectURL(new Blob([String.fromCharCode(65279),csv],{type:'text/csv;charset=utf-8'}));
  const a=document.createElement('a');a.href=url;a.download='Bukit-Indah-'+reportMonth+'.csv';a.click();setTimeout(()=>URL.revokeObjectURL(url),1000);
 }
-previewLogin();
+if(hasPreviewOwnerSession())showPreviewAccount('owner','manager');
+else previewLogin();
 
 </script></html>
